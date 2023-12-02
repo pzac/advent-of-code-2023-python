@@ -22,6 +22,18 @@ class Game:
         return False
     return True
 
+  def power(self):
+    min = {
+      'red': 0,
+      'green': 0,
+      'blue': 0
+    }
+    for set in self.sets:
+      for color, num in set.colors.items():
+        if min[color] < num:
+          min[color] = num
+    return min['red'] * min['green'] * min['blue']
+
 class Set:
   def __init__(self, data):
     self.data = data
@@ -39,6 +51,7 @@ class Set:
 
 
 sum = 0
+power_sum = 0
 
 
 with open(FILE) as f:
@@ -51,5 +64,7 @@ with open(FILE) as f:
 for game in games:
   if game.is_valid():
     sum += game.game_id
+  power_sum += game.power()
 
-print(sum)
+print("game id sum:", sum)
+print("power sum:", power_sum)
